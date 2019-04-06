@@ -1,0 +1,20 @@
+<?php
+include('./config.php');
+if(isset($_GET['foo'])) {
+if(strlen($_GET['foo']) > 14) exit("string is long!"); 
+$foo = addslashes($_GET['foo']);
+$filter = "yelang123|0x|0b|limit|like|regexp|limit|_|information|schema|char|sin|cos|asin|procedure|trim|pad|make|mid";
+$filter .= "substr|compress|where|code|replace|conv|insert|right|left|cast|ascii|x|hex|version|user|data|b|load_file|out|gcc|locate|count|reverse|\(|\)|concat|\`";
+if(preg_match("/{$filter}/is",$foo)) exit("no hack!");
+$query = "select if('yelang123'='{$foo}' , 'clear challenge!', 0) as flag";
+$result = mysql_fetch_array(mysql_query($query));
+    if($result['flag'] === 'clear challenge!') {
+        echo 'Congratulations!! flag is '. __FLAG__.'<br>';
+    } else {
+        echo 'try plz<br>';
+    }
+} else {
+echo "hack me!<br>";
+}
+highlight_file(__FILE__);
+?>

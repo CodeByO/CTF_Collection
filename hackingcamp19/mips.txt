@@ -1,0 +1,129 @@
+flag
+    .ascii    KA@NRzp2^F6rz]S0t2qqhme000
+    .text
+    .align    2
+    .globl    main
+    .set    nomips16
+    .ent    main
+    .type    main, @function
+main
+    .frame    $fp,24,$31        # vars= 8, regs= 10, args= 0, gp= 8
+    .mask    0x40000000,-4
+    .fmask    0x00000000,0
+    .set    noreorder
+    .set    nomacro
+    addiu    $sp,$sp,-24
+    sw    $fp,20($sp)
+    move    $fp,$sp
+    sw    $0,8($fp)
+    j    $L2
+    nop
+
+$L6
+    lw    $4,8($fp)                #$4 = 0
+    li    $2,1431633920            # 0x55550000
+    ori    $2,$2,0x5556
+    mult    $4,$2
+    mfhi    $3
+    sra    $2,$4,31
+    subu    $3,$3,$2
+    move    $2,$3
+    sll    $2,$2,1
+    addu    $2,$2,$3
+    subu    $3,$4,$2
+    bne    $3,$0,$L3
+    nop
+
+    lui    $2,%hi(flag)
+    addiu    $3,$2,%lo(flag)
+    lw    $2,8($fp)
+    addu    $2,$3,$2
+    lb    $2,0($2)
+    xori    $2,$2,0x3
+    sll    $3,$2,24
+    sra    $3,$3,24
+    lui    $2,%hi(flag)
+    addiu    $4,$2,%lo(flag)
+    lw    $2,8($fp)
+    addu    $2,$4,$2
+    sb    $3,0($2)
+    j    $L4
+    nop
+
+$L3
+    lw    $4,8($fp)                #$4 = 0
+    li    $2,1431633920            # 0x55550000
+    ori    $2,$2,0x5556
+    mult    $4,$2
+    mfhi    $3
+    sra    $2,$4,31
+    subu    $3,$3,$2
+    move    $2,$3
+    sll    $2,$2,1
+    addu    $2,$2,$3
+    subu    $3,$4,$2
+    li    $2,1            # 0x1
+    bne    $3,$2,$L5
+    nop
+
+    lui    $2,%hi(flag)
+    addiu    $3,$2,%lo(flag)
+    lw    $2,8($fp)
+    addu    $2,$3,$2
+    lb    $2,0($2)
+    xori    $2,$2,0x2
+    sll    $3,$2,24
+    sra    $3,$3,24
+    lui    $2,%hi(flag)
+    addiu    $4,$2,%lo(flag)
+    lw    $2,8($fp)
+    addu    $2,$4,$2
+    sb    $3,0($2)
+    j    $L4
+    nop
+
+$L5
+    lw    $4,8($fp)                #$4 = 0
+    li    $2,1431633920            # 0x55550000
+    ori    $2,$2,0x5556
+    mult    $4,$2
+    mfhi    $3
+    sra    $2,$4,31
+    subu    $3,$3,$2
+    move    $2,$3
+    sll    $2,$2,1
+    addu    $2,$2,$3
+    subu    $3,$4,$2
+    li    $2,2            # 0x2
+    bne    $3,$2,$L4
+    nop
+
+    lui    $2,%hi(flag)
+    addiu    $3,$2,%lo(flag)
+    lw    $2,8($fp)
+    addu    $2,$3,$2
+    lb    $2,0($2)
+    xori    $2,$2,0x1
+    sll    $3,$2,24
+    sra    $3,$3,24
+    lui    $2,%hi(flag)
+    addiu    $4,$2,%lo(flag)
+    lw    $2,8($fp)
+    addu    $2,$4,$2
+    sb    $3,0($2)
+$L4
+    lw    $2,8($fp)
+    addiu    $2,$2,1
+    sw    $2,8($fp)
+$L2
+    lw    $2,8($fp)
+    slt    $2,$2,24
+    bne    $2,$0,$L6
+    nop
+
+    move    $2,$0
+    move    $sp,$fp
+    lw    $fp,20($sp)
+    addiu    $sp,$sp,24
+    j    $31
+    nop
